@@ -1,0 +1,52 @@
+<div>
+    <p>hello</p>
+    <p-table [columns]="cols" [value]="users" sortMode="multiple" #dt [paginator]="true" [rows]="3">
+        <ng-template pTemplate="caption">
+            Users List
+        </ng-template>
+
+        <!-- Global Filter -->
+
+        <ng-template pTemplate="caption">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        </ng-template>
+
+        <!-- Header -->
+        
+        <ng-template pTemplate="header" let-columns>
+                <!-- <ng-template pTemplate="header" let-columns *ngIf="roleCheck"> -->
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                   {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+
+            <!-- Input for Column Filters -->
+
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                </th>
+            </tr>
+        </ng-template>
+
+        <!-- Table Body -->
+
+        <ng-template pTemplate="body" let-user let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns" >
+                    {{user[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            There are {{users?.length}} users
+        </ng-template>
+    </p-table>
+
+   
+</div>
+
+<router-outlet></router-outlet>
