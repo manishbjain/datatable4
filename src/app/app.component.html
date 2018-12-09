@@ -1,4 +1,5 @@
 <div>
+   
     <p-table [columns]="cols" [value]="users" sortMode="multiple" #dt [paginator]="true" [rows]="3">
         <ng-template pTemplate="caption">
             Users List
@@ -16,28 +17,38 @@
         <ng-template pTemplate="header" let-columns>
                 <!-- <ng-template pTemplate="header" let-columns *ngIf="roleCheck"> -->
             <tr>
-                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                   {{col.header}}
+                    <ng-container *ngFor="let col of columns" [pSortableColumn]="col.field">
+                            <th *ngIf="col.visibility">
+                                    {{col.header}}
                     <p-sortIcon [field]="col.field"></p-sortIcon>
-                </th>
-            </tr>
+                        </th>
+                    </ng-container>
+                </tr>
+
+               
+            
 
             <!-- Input for Column Filters -->
 
             <tr>
-                <th *ngFor="let col of columns" [ngSwitch]="col.field">
-                    <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-                </th>
-            </tr>
+
+                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                            <th *ngIf="col.visibility">
+                                    <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                        </th>
+                    </ng-container>
+                    </tr>
         </ng-template>
 
         <!-- Table Body -->
 
         <ng-template pTemplate="body" let-user let-columns="columns">
             <tr>
-                <td *ngFor="let col of columns" >
+                <ng-container *ngFor="let col of columns" >
+                    <td *ngIf="col.visibility">
                     {{user[col.field]}}
                 </td>
+            </ng-container>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">

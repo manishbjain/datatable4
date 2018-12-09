@@ -20,9 +20,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     
     this.cols = [
-      { field: 'id', header: 'Id', visibility: '1'  },
-      { field: 'name', header: 'Name',  visibility: '1'},
-      { field: 'email', header: 'Email' , visibility: '2'}
+      { field: 'id', header: 'Id', visibility: false},
+      { field: 'name', header: 'Name', visibility: true},
+      { field: 'email', header: 'Email', visibility: true}
     ];
 
     this.users = [
@@ -42,3 +42,5 @@ export interface User {
   name;
   email;
 }
+
+
