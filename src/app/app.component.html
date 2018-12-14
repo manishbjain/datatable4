@@ -1,7 +1,7 @@
 <div>
 
     <p-table (onRowClick)="dt.toggleRow($event.data)" [columns]="cols" [value]="users" sortMode="multiple" #dt
-        [paginator]="true" [rows]="15" [rowsPerPageOptions]="[15,25,50,100]">
+        [paginator]="true" [rows]="15" [rowsPerPageOptions]="[3,5,10]">
         <ng-template pTemplate="caption">
             Users List
         </ng-template>
