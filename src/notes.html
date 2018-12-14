@@ -1,8 +1,97 @@
 <!-- 
-1. Column visibility based on users and search result based on users
-2. dropdown input based page results 
-3. saved filters
-4. Row Expansion / Detail View
+
+1. Saved filters
+2. Row Expansion / Detail View (Row to Details)
+3. Theme Correction - Color Scheme and Layout
+4. Fixed Header
+5. Select Box and Actions
+6. Hover Actions
+7. Export to CSV
+8. Inline Editing
+9. Auto Suggestions
 
 
  -->
+
+<!--  this.btnNuevo = this.store.user_has_permiso('alumnos_create');
+this.btnEdit  = this.store.user_has_permiso('alumnos_edit');
+// Available match modes are "startsWith", "contains", "endsWith", "equals" and "in"
+this.cols = [
+    { field: 'id',        header: 'Ref.',       visible: false, style: 'width:6em', filter: 'equals', },
+    { field: 'apellido1', header: 'Apellido-1', visible: true,  style: 'width:15%', filter: 'contains',  },
+    { field: 'apellido2', header: 'Apellido-2', visible: true,  style: 'width:15%', filter: 'contains',  },
+    ... more fields...,
+    { field: 'dob',       header: 'FNAC',       visible: this.btnEdit,  style: 'width:8em', filter: 'contains',  },
+    { field: 'id_legal',  header: 'DNI',        visible:this.btnEdit,  style: 'width:8em', filter: 'contains',  },
+
+];
+
+
+<p-table 
+        #dt
+        [columns]="cols" 
+        [value]="alumnos" 
+        dataKey="id" 
+        selectionMode="single" 
+        [(selection)]="selectedAlumno" 
+        [metaKeySelection]="false"
+        (onRowSelect)="onRowSelect($event)" 
+        sortMode="multiple"
+        [(contextMenuSelection)]="selectedAlumno" 
+        [contextMenu]="cm"
+        [paginator]="true" 
+        [lazy]="true" 
+        (onLazyLoad)="loadLazy($event)"
+        stateStorage="session" 
+        stateKey="alumnos-list-session"
+        [totalRecords]="totalRecords"             
+        [rowsPerPageOptions]="[20,30,50,100]"
+        [rows]="20"
+        [responsive]="true">
+        <ng-template pTemplate="caption">                
+            <div style="text-align:center">
+                <button pButton 
+                    type="button"
+                    label="Relación de alumnos"
+                    class="ui-button-secondary ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                </button>
+                <i class="fa fa-arrows-alt-h"></i>
+                <button pButton 
+                        type="button" 
+                        icon="fa fa-plus"  
+                        (click)="showDialogToAdd()" 
+                        [disabled]= "!btnNuevo"
+                        label="Nuevo"
+                        style="margin-bottom:10px" 
+                        class="indigo-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                </button>
+            </div>            
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>          
+                <th *ngFor="let col of cols" [pSortableColumn]="col.field" [style]="estilo(col.style)" [hidden]="!col.visible">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+            <tr> 
+                <th *ngFor="let col of cols" [ngSwitch]="col.field" [hidden]="!col.visible">
+                    <input *ngSwitchCase="'apellido1'" pInputText type="text" style="width:95%" (input)="dt.filter($event.target.value, col.field, col.filter)" [value]="dt.filters[col.field]?.value">
+                    <input *ngSwitchCase="'apellido2'" pInputText type="text" style="width:95%" (input)="dt.filter($event.target.value, col.field, col.filter)" [value]="dt.filters[col.field]?.value">
+                    ... more fields ...
+                    <input *ngSwitchCase="'id_legal'"  pInputText type="text" style="width:95%" (input)="dt.filter($event.target.value, col.field, col.filter)" [value]="dt.filters[col.field]?.value">
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr  [pContextMenuRow]="rowData">
+                <td [pSelectableRow]="rowData" *ngFor="let col of columns" class="ui-resizable-column" [hidden]="!col.visible" [ngSwitch]="col.field">
+                    <span *ngSwitchCase="'dob'">{{rowData[col.field] | date : "dd/MM/yyyy"}}</span>
+                    <span *ngSwitchDefault> {{rowData[col.field]}}</span>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+        ...
+        </ng-template>
+    </p-table> -->

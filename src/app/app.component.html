@@ -1,6 +1,7 @@
 <div>
-   
-    <p-table [columns]="cols" [value]="users" sortMode="multiple" #dt [paginator]="true" [rows]="3">
+
+    <p-table (onRowClick)="dt.toggleRow($event.data)" [columns]="cols" [value]="users" sortMode="multiple" #dt
+        [paginator]="true" [rows]="15" [rowsPerPageOptions]="[15,25,50,100]">
         <ng-template pTemplate="caption">
             Users List
         </ng-template>
@@ -9,54 +10,90 @@
 
         <ng-template pTemplate="caption">
             <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-            <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+            <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                style="width:auto">
         </ng-template>
 
         <!-- Header -->
-        
+
         <ng-template pTemplate="header" let-columns>
-                <!-- <ng-template pTemplate="header" let-columns *ngIf="roleCheck"> -->
+            <!-- <ng-template pTemplate="header" let-columns *ngIf="roleCheck"> -->
             <tr>
-                    <ng-container *ngFor="let col of columns" [pSortableColumn]="col.field">
-                            <th *ngIf="col.visibility">
-                                    {{col.header}}
-                    <p-sortIcon [field]="col.field"></p-sortIcon>
-                        </th>
-                    </ng-container>
-                </tr>
+                <th style="width: 3em"></th>
+                <ng-container *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    <th *ngIf="col.visibility">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                </ng-container>
+            </tr>
 
-               
-            
 
-            <!-- Input for Column Filters -->
+            <!-- COLUMN FILTERS INPUT AREA -->
 
             <tr>
+                <th style="width: 3em"></th>
+                <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
 
-                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
-                            <th *ngIf="col.visibility">
-                                    <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-                        </th>
-                    </ng-container>
-                    </tr>
+                    <th *ngIf="col.visibility">
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    </th>
+                </ng-container>
+            </tr>
         </ng-template>
 
         <!-- Table Body -->
 
-        <ng-template pTemplate="body" let-user let-columns="columns">
+        <ng-template pTemplate="body" let-user let-expanded="expanded" let-columns="columns">
             <tr>
-                <ng-container *ngFor="let col of columns" >
-                    <td *ngIf="col.visibility">
-                    {{user[col.field]}}
+                <td>
+                    <a href="#" [pRowToggler]="user">
+                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                    </a>
                 </td>
-            </ng-container>
+
+                <ng-container *ngFor="let col of columns">
+                    <td *ngIf="col.visibility">
+                        {{user[col.field]}}
+                    </td>
+                </ng-container>
             </tr>
         </ng-template>
+
+        <!-- ROW EXPANSION TEMPLATE -->
+
+        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+            <tr>
+                <td [attr.colspan]="columns.length + 1">
+                    <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
+                        <div class="ui-g-12 ui-md-3" style="text-align:center">
+                            <img [attr.alt]="rowData.brand" src="assets/showcase/images/demo/car/{{rowData.brand}}.png">
+                        </div>
+                        <div class="ui-g-12 ui-md-9">
+                            <div class="ui-g">
+                                <div class="ui-g-12">
+                                    <b>ID:</b> {{user.id}}
+                                </div>
+                                <div class="ui-g-12">
+                                    <b>Name:</b> {{user.name}}
+                                </div>
+                                <div class="ui-g-12">
+                                    <b>Email:</b> {{user.email}}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+
         <ng-template pTemplate="summary">
             There are {{users?.length}} users
         </ng-template>
     </p-table>
 
-   
+
 </div>
 
 <router-outlet></router-outlet>
