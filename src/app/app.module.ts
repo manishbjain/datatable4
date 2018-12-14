@@ -7,13 +7,11 @@ import { AppComponent } from './app.component';
 import {TableModule} from 'primeng/table';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'; 
 import { HttpClientModule } from '@angular/common/http';
-import { UserlistComponent } from './users/userlist/userlist.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    UserlistComponent  
-  ],
+    AppComponent
+      ],
   imports: [
     BrowserModule,
     AppRoutingModule,
